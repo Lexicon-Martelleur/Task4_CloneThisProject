@@ -1,4 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Diagnostics.Metrics;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace SkalProj_Datastrukturer_Minne
 {
@@ -188,16 +194,74 @@ namespace SkalProj_Datastrukturer_Minne
         }
 
 
-            /// <summary>
-            /// Examines the datastructure Stack
-            /// </summary>
-            static void ExamineStack()
+        /// <summary>
+        /// Examines the datastructure Stack
+        /// </summary>
+        static void ExamineStack()
         {
             /*
              * Loop this method until the user inputs something to exit to main menue.
              * Create a switch with cases to push or pop items
              * Make sure to look at the stack after pushing and and poping to see how it behaves
             */
+
+            //Övning 3: ExamineStack()
+            //Stackar påminner om köer, men en stor skillnad är att stackar använder sig av Först In Sist
+            //Ut(FILO) principen.Alltså gäller att det element som stoppas in först(push) är det som
+            //kommer tas bort sist(pop).
+            //5 / 7
+            //1.Simulera ännu en gång ICA-kön på papper. Denna gång med en stack.Varför är det
+            //inte så smart att använda en stack i det här fallet?
+            //2.Implementera en ReverseText-metod som läser in en sträng från användaren och
+            //med hjälp av en stack vänder ordning på teckenföljden för att sedan skriva ut den
+            //omvända strängen till användaren.
+
+            // Simulation of ICA queue with stack.
+            var icaQueueAsStack = new Stack<string>();
+            Console.WriteLine("\nSimulation of ICA queue with stack (LIFO is not suitable for a ICA queue)");
+            Console.WriteLine("\na. Empty queue");
+            icaQueueAsStack.ToList().ForEach(item => Console.Write($"{item} "));
+            Console.WriteLine("\nb. Kalle in queue");
+            icaQueueAsStack.Push("Kalle");
+            icaQueueAsStack.ToList().ForEach(item => Console.Write($"{item} "));
+            Console.WriteLine("\n\nc. Greta in queue");
+            icaQueueAsStack.Push("Greta");
+            icaQueueAsStack.ToList().ForEach(item => Console.Write($"{item} "));
+            icaQueueAsStack.Pop();
+            Console.WriteLine("\n\nd. Kalle want to leave queue but is not last is in queue");
+            icaQueueAsStack.ToList().ForEach(item => Console.Write($"{item} "));
+            Console.WriteLine("\n\ne. Stina in queue");
+            icaQueueAsStack.Push("Stina");
+            icaQueueAsStack.ToList().ForEach(item => Console.Write($"{item} "));
+            Console.WriteLine("\n\nf. Greta want to leave queue but is not last in queue");
+            icaQueueAsStack.Pop();
+            icaQueueAsStack.ToList().ForEach(item => Console.Write($"{item} "));
+            Console.WriteLine("\n\ng. Olle in queue");
+            icaQueueAsStack.Push("Olle");
+            icaQueueAsStack.ToList().ForEach(item => Console.Write($"{item} "));
+
+            var description = "\n\nAdd a text that will be reversed.";
+            Console.WriteLine(description);
+            string input = Console.ReadLine() ?? "";
+            var charStack = new Stack<char>();
+            input.ToList().ForEach(charStack.Push);
+            var inputSize = charStack.Count;
+            Console.WriteLine("\nReversed string:");
+            Console.WriteLine(GetReverseText(input));
+            Console.WriteLine("Reversed string end\n");
+        }
+
+        static string GetReverseText(string text)
+        {
+            var charStack = new Stack<char>();
+            text.ToList().ForEach(charStack.Push);
+            var inputSize = charStack.Count;
+            var reversedText = new StringBuilder();
+            for (int i = 0; i < inputSize; i++)
+            {
+                reversedText.Append(charStack.Pop());
+            }
+            return reversedText.ToString();
         }
 
         static void CheckParanthesis()
