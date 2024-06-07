@@ -74,9 +74,9 @@ namespace SkalProj_Datastrukturer_Minne
 
             var theList = new List<string>();
             var exit = false;
-            
+
             do {
-                var description = "Use +<you text> to add a text item, or +<you text> to remove a text item.";
+                var description = "Use '+<your_text>' to add a text item, '-<your_text>' to remove a text item, or 'q/Q' to quit.";
                 Console.WriteLine(description);
                 string input = Console.ReadLine() ?? "";
                 char nav = input[0];
@@ -124,12 +124,74 @@ namespace SkalProj_Datastrukturer_Minne
              * Create a switch with cases to enqueue items or dequeue items
              * Make sure to look at the queue after Enqueueing and Dequeueing to see how it behaves
             */
+
+            var theQueue = new Queue<string>();
+            var exit = false;
+
+            do
+            {
+                var description = "Use '+<your_text>' to add a text item, '-' to remove a text item, or 'q/Q' to quit.";
+                Console.WriteLine(description);
+                string input = Console.ReadLine() ?? "";
+                char nav = input[0];
+                string value = input.Substring(1);
+
+
+                Console.WriteLine($"Queue size before {theQueue.Count}");
+                theQueue.ToList().ForEach(item => Console.Write($"{item} "));
+                switch (nav)
+                {
+                    case '+':
+                        Console.WriteLine($"Add text item");
+                        theQueue.Enqueue(value);
+                        break;
+                    case '-':
+                        Console.WriteLine($"Remove text item");
+                        theQueue.Dequeue();
+                        break;
+                    case 'q' or 'Q':
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine(description);
+                        break;
+
+                }
+                Console.WriteLine($"Queue size before {theQueue.Count}");
+                theQueue.ToList().ForEach(item => Console.Write($"{item} "));
+            } while (!exit);
+
+            // Simulation of ICA queue.
+            var icaQueue = new Queue<string>();
+            Console.WriteLine("\nSimulation of ICA queue");
+            Console.WriteLine("\na. Empty queue");
+            icaQueue.ToList().ForEach(item => Console.Write($"{item} "));
+            Console.WriteLine("\nb. Kalle in queue");
+            icaQueue.Enqueue("Kalle");
+            icaQueue.ToList().ForEach(item => Console.Write($"{item} "));
+            Console.WriteLine("\n\nc. Greta in queue");
+            icaQueue.Enqueue("Greta");
+            icaQueue.ToList().ForEach(item => Console.Write($"{item} "));
+            icaQueue.Dequeue();
+            Console.WriteLine("\n\nd. Kalle leave queue");
+            icaQueue.ToList().ForEach(item => Console.Write($"{item} "));
+            Console.WriteLine("\n\ne. Stina in queue");
+            icaQueue.Enqueue("Stina");
+            icaQueue.ToList().ForEach(item => Console.Write($"{item} "));
+            Console.WriteLine("\n\nf. Greta leave queue");
+            icaQueue.Dequeue();
+            icaQueue.ToList().ForEach(item => Console.Write($"{item} "));
+            Console.WriteLine("\n\ng. Olle in queue");
+            icaQueue.Enqueue("Olle");
+            icaQueue.ToList().ForEach(item => Console.Write($"{item} "));
+
         }
 
-        /// <summary>
-        /// Examines the datastructure Stack
-        /// </summary>
-        static void ExamineStack()
+
+            /// <summary>
+            /// Examines the datastructure Stack
+            /// </summary>
+            static void ExamineStack()
         {
             /*
              * Loop this method until the user inputs something to exit to main menue.
