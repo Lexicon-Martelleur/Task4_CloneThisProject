@@ -72,12 +72,46 @@ namespace SkalProj_Datastrukturer_Minne
              * Below you can see some inspirational code to begin working.
             */
 
-            //List<string> theList = new List<string>();
-            //string input = Console.ReadLine();
-            //char nav = input[0];
-            //string value = input.substring(1);
+            var theList = new List<string>();
+            var exit = false;
+            
+            do {
+                var description = "Use +<you text> to add a text item, or +<you text> to remove a text item.";
+                Console.WriteLine(description);
+                string input = Console.ReadLine() ?? "";
+                char nav = input[0];
+                string value = input.Substring(1);
 
-            //switch(nav){...}
+
+                Console.WriteLine($"List capacity before {theList.Capacity}");
+                Console.WriteLine($"List count before {theList.Count}");
+                switch (nav) {
+                    case '+':
+                        Console.WriteLine($"Add text item");
+                        theList.Add(value);
+                        break;
+                    case '-':
+                        Console.WriteLine($"Remove text item");
+                        theList.Remove(value);
+                        break;
+                    case 'q' or 'Q':
+                        exit = true;
+                        break;
+                    default:
+                        Console.WriteLine(description);
+                        break;
+
+                }
+                Console.WriteLine($"List capacity after {theList.Capacity}");
+                Console.WriteLine($"List count after {theList.Count}");
+            } while (!exit);
+
+            var answer = """
+            A List is have first capacity one, the when adding an item to the list the list increase internally to an array with capacity 4.
+            Then when the list is full again it will double the size of its internal array to 8, 16, 32, etc... The list will never decrease
+            the size of its internal array even if the items are removed to zero items.
+            """;
+            Console.WriteLine(answer);
         }
 
         /// <summary>
