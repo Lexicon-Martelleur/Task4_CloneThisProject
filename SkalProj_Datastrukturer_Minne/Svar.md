@@ -22,10 +22,10 @@ kännt som *Skräp Hanteraren* att ta bort objektet från *Heapen*.
 En avstickare är strängar som behandlas som värde typer i C#, dvs dem är lika om värdet av två strängar är lika.
 .
 
-** Värde typer** Sparas i C# i stacken om inte värde typen är en del av en referenstyp då spara den tillsammans med referens typen i heapen (värde typer sparats där dem deklareras).
+**Värde typer** Sparas i C# i stacken om inte värde typen är en del av en referenstyp då spara den tillsammans med referens typen i heapen (värde typer sparats där dem deklareras).
 Värde typer är lika om värdet av objekt är lika med värdet av ett annat objekt.
 
-3. **Retur Värde**
+**3. Retur Värde**
 
 Metoden *ReturnValue* returnerar 3 därför y och x är värde typer. Värde typen y kommer först ha default värdet 0, sen samma värde som x och tillslut samma värde som y.
 Värde typen x kommer först ha standar värdet noll, och sen 3 vilket metoden sen returnerar

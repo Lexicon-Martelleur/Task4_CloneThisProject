@@ -334,6 +334,9 @@ class Program
         return true;
     }
 
+    /// <summary>
+    /// Class used to decide opening, closing, and matching brackets.
+    /// </summary>
     private class BracketsRef
     {
         private readonly static HashSet<char> _openingBrackets = ['(', '[', '{', '<'];
