@@ -1,7 +1,7 @@
 ﻿# Svar
 
 
-## Prgammets Minne
+## Progammets Minne
 
 **1. Stack och Heap**: 
 

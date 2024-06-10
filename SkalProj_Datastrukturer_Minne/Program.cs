@@ -242,7 +242,7 @@ class Program
     }
 
     /// <summary>
-    /// A method use to reverse text using a stack a stack as DS.
+    /// A method use to reverse text using a stack as DS.
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
@@ -335,6 +335,71 @@ class Program
                 $"{openingBracket}{closingBracket}" == "<>"
             );
             }
+        }
+    }
+
+
+    /**
+     * Task 5: Recursive.
+     */
+    static uint RecursiveEven(uint n)
+    {
+        if (n == 0) { throw new ArgumentException("_"); } 
+        else if (n == 1) {  return 0; }
+        return RecursiveEven(n - 1) + 2;
+    }
+
+    /// <summary>
+    /// Calculate Fibonacci with memoization.
+    /// </summary>
+    /// <remarks>In mathematics, the Fibonacci sequence is a sequence in which each number is the sum of the two preceding ones.</remarks>
+    /// <remarks>The use of memoization should reduce the Fibonacci recursive implementations time complexity from O(2^n) to O(n).</remarks>
+    /// <param name="n">The nth Fibonacci number to be calculated.</param>
+    /// <param name="memo">A dictionary used for memoization.</param>
+    /// <returns></returns>
+    internal int FibonacciRecursiveWithMemoization(int n, Dictionary<int, int> memo)
+    {
+        if (n == 0) { return 0; }
+        else if (n == 1) { return 1; }
+        else if (memo.TryGetValue(n, out int value)) { return value; }
+        else
+        {
+            int res = FibonacciRecursiveWithMemoization(n - 1, memo) + FibonacciRecursiveWithMemoization(n - 2, memo);
+            memo[n] = res;
+            return res;
+        }
+    }
+
+    /**
+     * Task 6: Iteration.
+     */
+    static uint IterativeEven(uint n)
+    {
+        if (n == 0) { throw new ArgumentException("_"); }
+        int result = 0;
+        for (int i = 0; i < n - 1; i++)
+        {
+            result += 2;
+        }
+        return 2;
+    }
+
+    internal int FibonacciIterative(int n)
+    {
+        if (n == 0) { return 0; }
+        else if (n == 1) { return 1; }
+        else
+        {
+            int previousPreviousSum = 0;
+            int previousSum = 1;
+            int currentSum = previousSum + previousPreviousSum;
+            for (int i = 2; i <= n; i++)
+            {
+                currentSum = previousSum + previousPreviousSum;
+                previousPreviousSum = previousSum;
+                previousSum = currentSum;
+            }
+            return currentSum;
         }
     }
 }
