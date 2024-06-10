@@ -206,17 +206,6 @@ class Program
          * Make sure to look at the stack after pushing and and poping to see how it behaves
         */
 
-        //Övning 3: ExamineStack()
-        //Stackar påminner om köer, men en stor skillnad är att stackar använder sig av Först In Sist
-        //Ut(FILO) principen.Alltså gäller att det element som stoppas in först(push) är det som
-        //kommer tas bort sist(pop).
-        //5 / 7
-        //1.Simulera ännu en gång ICA-kön på papper. Denna gång med en stack.Varför är det
-        //inte så smart att använda en stack i det här fallet?
-        //2.Implementera en ReverseText-metod som läser in en sträng från användaren och
-        //med hjälp av en stack vänder ordning på teckenföljden för att sedan skriva ut den
-        //omvända strängen till användaren.
-
         // Simulation of ICA queue with stack.
         var icaQueueAsStack = new Stack<string>();
         Console.WriteLine("\nSimulation of ICA queue with stack (LIFO is not suitable for a ICA queue)");
@@ -257,7 +246,7 @@ class Program
     /// </summary>
     /// <param name="text"></param>
     /// <returns></returns>
-    static string GetReverseText(string text)
+    private static string GetReverseText(string text)
     {
         var charStack = new Stack<char>();
         text.ToList().ForEach(charStack.Push);
@@ -278,46 +267,35 @@ class Program
          * Example of incorrect: (()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 );
          */
 
-        var correctExample = "(()), {}, [({})]";
-        var inCorrectExample = "(()]), [), {[()}]";
-        Console.WriteLine(IsCorrectFormat(correctExample));
-        Console.WriteLine(IsCorrectFormat(inCorrectExample));
+        var correctExample = "(()), {}, [({})],  List<int> list = new List<int>() { 1, 2, 3, 4 }";
+        var inCorrectExample = "(()]), [), {[()}],  List<int> list = new List<int>() { 1, 2, 3, 4 )";
+        Console.WriteLine(IsCorrectFormatedText(correctExample));
+        Console.WriteLine(IsCorrectFormatedText(inCorrectExample));
     }
 
-    /// TODO! Validate and clean up.
-    private static bool IsCorrectFormat(string text)
+    private static bool IsCorrectFormatedText(string text)
     {
-        try
-        {
-            return IsTextContainingMatchinBrackets(text);
-        }
-        catch (Exception e) {
-            Console.WriteLine(e);
-            return false;
-        }
+        return IsTextContainingMatchinBrackets(text);   
     }
 
-    /// TODO! Validate and clean up.
-    private static bool IsTextContainingMatchinBrackets(string text) 
+    private static bool IsTextContainingMatchinBrackets(string text)
     {
-        HashSet<char> openingBrackets = ['(', '[', '{', '<'];
-        HashSet<char> closingBrackets = [')', ']', '}', '>'];
-
-        var charQueue = new Queue<char>();
+        var textAsCharQueue = new Queue<char>();
+        text.ToList().ForEach(textAsCharQueue.Enqueue);
+        var textSize = textAsCharQueue.Count;
         var openingBracketStack = new Stack<char>();
-        text.ToList().ForEach(charQueue.Enqueue);
-        var textSize = charQueue.Count;
 
         for (int i = 0; i < textSize; i++)
         {
-            var dequeuedChar = charQueue.Dequeue();
-            if (openingBrackets.Contains(dequeuedChar))
+            var isDequeued = textAsCharQueue.TryDequeue(out char dequeuedChar);
+            if (isDequeued && BracketsRef.IsOpeningBracket(dequeuedChar))
             {
                 openingBracketStack.Push(dequeuedChar);
             }
-            else if (closingBrackets.Contains(dequeuedChar))
+            else if (BracketsRef.IsClosingBracket(dequeuedChar))
             {
-                if (!IsMatchingBrackets(openingBracketStack.Pop(), dequeuedChar))
+                var isPoped = openingBracketStack.TryPop(out char lastOpeningBracket);
+                if (isPoped && !BracketsRef.IsMatchingBrackets(lastOpeningBracket, dequeuedChar))
                 {
                     return false;
                 }
@@ -326,27 +304,37 @@ class Program
         return true;
     }
 
-    /// TODO! Validate and clean up.
-    private static bool IsMatchingBrackets(char openingBracket, char closingBracket)
+    private class BracketsRef
     {
-        HashSet<char> openingBrackets = ['(', '[', '{'];
-        HashSet<char> closingBrackets = [')', ']', '}'];
+        private readonly static HashSet<char> _openingBrackets = ['(', '[', '{', '<'];
+        private readonly static  HashSet<char> _closingBrackets = [')', ']', '}', '>'];
 
-        if (!openingBrackets.Contains(openingBracket)) 
+        public static bool IsOpeningBracket(char aChar)
         {
-            return false; 
+            return _openingBrackets.Contains(aChar);
         }
-        else if (!closingBrackets.Contains(closingBracket)) 
+
+        public static bool IsClosingBracket(char aChar)
         {
-            return false;
+            return _closingBrackets.Contains(aChar);
         }
-        else
+
+        public static bool IsMatchingBrackets(char openingBracket, char closingBracket)
         {
-            return (
+            if (!IsOpeningBracket(openingBracket) ||
+                !IsClosingBracket(closingBracket))
+            {
+                return false;
+            }
+            else
+            {
+                return (
                 $"{openingBracket}{closingBracket}" == "()" ||
                 $"{openingBracket}{closingBracket}" == "[]" ||
-                $"{openingBracket}{closingBracket}" == "{}"
-            ); 
+                $"{openingBracket}{closingBracket}" == "{}" ||
+                $"{openingBracket}{closingBracket}" == "<>"
+            );
+            }
         }
     }
 }
