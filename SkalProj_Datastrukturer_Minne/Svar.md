@@ -7,7 +7,7 @@
 
 Stacken och Heapen är två delar/typer av minnet som programmets process använder sig av.
 
-**Stacken** är en LIFO datastruktur (=det objekt som sist läggs till är det objektet som först tas bort) som hanterar de metoder som körs av programmet. När en metod anropas av
+**Stacken** är en LIFO datastruktur (=det objekt som sist läggs till är det objektet som först tas bort) som hanterar minnet för metoderna som körs av programmet. När en metod anropas av
 programmet så läggs dess information i en *Stack Ram* högst upp på *Stacken*. Denna *Stack Ram* håller värdena för metodens inskickade parametrar, de lokala typerna som
 deklareras i metodens kropp, samt en pekare till nästa exekverings punkt i den underliggande *Stack Ramen*. När den översta *Stack Ramen* har exekverats så plockas den bort från stacken
 tillsammans med dess argumet, lokala värde typer samt referenser (inte själva datan i heapen), på detta sätt så rensar *Stacken* sig själv. Programmet fortsätter sen exekvering
